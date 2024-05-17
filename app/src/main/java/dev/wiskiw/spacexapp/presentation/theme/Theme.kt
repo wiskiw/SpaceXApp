@@ -1,4 +1,4 @@
-package dev.wiskiw.spacexapp.ui.theme
+package dev.wiskiw.spacexapp.presentation.theme
 
 import android.app.Activity
 import android.os.Build
