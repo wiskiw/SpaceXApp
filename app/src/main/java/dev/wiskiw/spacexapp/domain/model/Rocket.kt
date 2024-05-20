@@ -1,6 +1,7 @@
 package dev.wiskiw.spacexapp.domain.model
 
-data class Mission(
+data class Rocket(
+    val id: String,
     val name: String,
-    val imageUrl: String?,
+    val type: String,
 )

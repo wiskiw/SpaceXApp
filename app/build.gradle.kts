@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.apolloGraphql)
 }
 
 android {
@@ -49,6 +50,12 @@ android {
     }
 }
 
+apollo {
+    service("service") {
+        packageName.set("dev.wiskiw.spacexapp")
+    }
+}
+
 dependencies {
 
     implementation(libs.androidx.core.ktx)
@@ -68,6 +75,9 @@ dependencies {
     implementation(libs.koin.core)
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)
+
+    // Networking
+    implementation(libs.apollo)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

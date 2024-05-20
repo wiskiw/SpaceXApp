@@ -1,0 +1,18 @@
+query LaunchDetails(
+    $launchId: ID!,
+    $size: PatchSize = LARGE,
+) {
+    launch(id: $launchId) {
+        id
+        rocket {
+            id
+            name
+            type
+        }
+        mission {
+            name
+            missionPatch(size: $size)
+        }
+        site
+    }
+}

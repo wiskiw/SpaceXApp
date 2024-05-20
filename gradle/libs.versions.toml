@@ -15,6 +15,9 @@ coil = "2.6.0"
 # DI
 koin = "3.5.6"
 
+# Networking
+apollo = "3.8.3"
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -40,6 +43,10 @@ koin-core = { module = "io.insert-koin:koin-core" }
 koin-android = { module = "io.insert-koin:koin-android" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose" }
 
+#Networking
+apollo = { group = "com.apollographql.apollo3", name = "apollo-runtime", version.ref = "apollo" }
+
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+apolloGraphql = { id = "com.apollographql.apollo3", version.ref = "apollo" }

@@ -1,0 +1,17 @@
+query Launches(
+    $size: PatchSize = SMALL,
+) {
+    launches {
+        launches {
+            id
+            rocket {
+                name
+                type
+            }
+            mission {
+                name
+                missionPatch
+            }
+        }
+    }
+}
