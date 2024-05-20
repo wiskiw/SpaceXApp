@@ -1,4 +1,4 @@
-package dev.wiskiw.spacexapp
+package dev.wiskiw.spacexapp.app
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -15,7 +15,7 @@ class MainActivity : ComponentActivity() {
 
 
                 // todo implement navigation
-                LaunchesScreen(LaunchesViewModel())
+                LaunchesScreen()
             }
         }
     }

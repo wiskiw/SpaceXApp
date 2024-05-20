@@ -36,11 +36,11 @@ import dev.wiskiw.spacexapp.domain.model.LaunchDetailsShort
 import dev.wiskiw.spacexapp.domain.model.Mission
 import dev.wiskiw.spacexapp.presentation.theme.SpaceXAppTheme
 import dev.wiskiw.spacexapp.presentation.theme.size
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun LaunchesScreen(
-    // todo inject VM
-    viewModel: LaunchesViewModel,
+    viewModel: LaunchesViewModel = koinViewModel(),
 ) {
     Content(
         state = viewModel.uiState,
