@@ -1,4 +1,4 @@
-package dev.wiskiw.spacexapp.repository.mapper
+package dev.wiskiw.spacexapp.data.mapper
 
 import dev.wiskiw.spacexapp.LaunchesQuery
 import dev.wiskiw.spacexapp.domain.model.LaunchDetailsShort

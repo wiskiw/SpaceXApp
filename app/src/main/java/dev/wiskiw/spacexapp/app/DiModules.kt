@@ -7,7 +7,7 @@ import dev.wiskiw.spacexapp.data.datasource.SpaceXLaunchesRemoteDataSource
 import dev.wiskiw.spacexapp.domain.repository.LaunchesRepository
 import dev.wiskiw.spacexapp.domain.usecase.LaunchesUseCase
 import dev.wiskiw.spacexapp.presentation.screen.launches.LaunchesViewModel
-import dev.wiskiw.spacexapp.repository.SpaceXLaunchesRepository
+import dev.wiskiw.spacexapp.data.repository.SpaceXLaunchesRepository
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -25,10 +25,10 @@ val appModule = module {
     }
 
     // creating DataSources
-    single<SpaceXLaunchesRemoteDataSource> { SpaceXLaunchesRemoteDataSource(get()) }
+    single<SpaceXLaunchesRemoteDataSource> { SpaceXLaunchesRemoteDataSource(get(), get()) }
 
     // creating Repositories
-    single<LaunchesRepository> { SpaceXLaunchesRepository(get(), get()) }
+    single<LaunchesRepository> { SpaceXLaunchesRepository(get()) }
 
     // creating UseCases
     single<LaunchesUseCase> { LaunchesUseCase(get()) }

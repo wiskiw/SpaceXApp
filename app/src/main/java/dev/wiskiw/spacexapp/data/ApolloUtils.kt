@@ -1,7 +1,7 @@
 package dev.wiskiw.spacexapp.data
 
 import com.apollographql.apollo3.exception.ApolloException
-import dev.wiskiw.spacexapp.repository.model.DataSourceException
+import dev.wiskiw.spacexapp.data.model.DataSourceException
 
 
 @Throws(DataSourceException::class)

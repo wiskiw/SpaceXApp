@@ -1,6 +1,6 @@
-package dev.wiskiw.spacexapp.repository.mapper
+package dev.wiskiw.spacexapp.data.mapper
 
-import dev.wiskiw.spacexapp.repository.model.MapperException
+import dev.wiskiw.spacexapp.data.model.MapperException
 
 abstract class Mapper<From, To> {
 

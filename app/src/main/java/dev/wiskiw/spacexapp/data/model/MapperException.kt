@@ -1,4 +1,4 @@
-package dev.wiskiw.spacexapp.repository.model
+package dev.wiskiw.spacexapp.data.model
 
 class MapperException : IllegalArgumentException {
     constructor(s: String?) : super(s)
