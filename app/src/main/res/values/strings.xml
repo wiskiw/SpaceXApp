@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">SpaceX App</string>
+
+
+    <string name="screen_launches_title">Launches</string>
+    <string name="screen_launches_launch_item_image_content_description">Image for %1$s mission</string>
+
 </resources>

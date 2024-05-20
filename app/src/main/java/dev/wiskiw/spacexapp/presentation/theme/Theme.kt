@@ -10,24 +10,32 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
+    primary = Color.Black,
     secondary = PurpleGrey80,
-    tertiary = Pink80
+    tertiary = Pink80,
+
+    secondaryContainer = Color(0xFF4D4D4D),
+    onSecondary = Color.White,
+    background = Color(0xFF1D1D22),
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
+    primary = Color.Black,
     secondary = PurpleGrey40,
-    tertiary = Pink40
+    tertiary = Pink40,
+
+    secondaryContainer = Color(0xFFE4E4E4),
+    onSecondary = Color.Black,
+    background = Color(0xFFFFFBFE),
 
     /* Other default colors to override
-    background = Color(0xFFFFFBFE),
     surface = Color(0xFFFFFBFE),
     onPrimary = Color.White,
     onSecondary = Color.White,
@@ -41,8 +49,8 @@ private val LightColorScheme = lightColorScheme(
 fun SpaceXAppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
-    content: @Composable () -> Unit
+    dynamicColor: Boolean = false,
+    content: @Composable () -> Unit,
 ) {
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
