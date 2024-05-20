@@ -10,7 +10,7 @@ query Launches(
             }
             mission {
                 name
-                missionPatch
+                missionPatch(size: $size)
             }
         }
     }

@@ -2,6 +2,7 @@ package dev.wiskiw.spacexapp.repository
 
 import dev.wiskiw.spacexapp.app.logger.AppLogger
 import dev.wiskiw.spacexapp.data.datasource.SpaceXLaunchesRemoteDataSource
+import dev.wiskiw.spacexapp.domain.model.LaunchDetailsFull
 import dev.wiskiw.spacexapp.domain.model.LaunchDetailsShort
 import dev.wiskiw.spacexapp.domain.repository.LaunchesRepository
 import dev.wiskiw.spacexapp.repository.mapper.ApolloLaunchDetailsToLaunchDetailsFullMapper
@@ -32,7 +33,7 @@ class SpaceXLaunchesRepository(
             }
     }
 
-    override suspend fun getLaunchDetails(id: String) = runCatching {
+    override suspend fun getLaunchDetails(id: String): Result<LaunchDetailsFull> = runCatching {
         val apolloLaunch = remoteDataSource.getLaunch(id = id)
         return@runCatching launchDetailsMapper.map(apolloLaunch)
     }

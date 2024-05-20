@@ -5,13 +5,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dev.wiskiw.spacexapp.domain.model.LaunchDetailsShort
-import dev.wiskiw.spacexapp.domain.model.Mission
+import dev.wiskiw.spacexapp.domain.usecase.LaunchesUseCase
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class LaunchesViewModel : ViewModel() {
+class LaunchesViewModel(
+    private val launchesUseCase: LaunchesUseCase,
+) : ViewModel() {
 
     sealed interface Action {
         data class OnLaunchClick(val launchId: String) : Action
@@ -33,28 +35,14 @@ class LaunchesViewModel : ViewModel() {
 
     private fun fetchLaunches() {
         viewModelScope.launch {
-            val launches = listOf(
-                LaunchDetailsShort(
-                    id = "110",
-                    rocketName = "Falcon 9",
-                    mission = Mission(
-                        name = "Starlink-15",
-                        imageUrl = "https://imgur.com/E7fjUBD.png"
-                    )
-                ),
-                LaunchDetailsShort(
-                    id = "9",
-                    rocketName = "Falcon Heavy",
-                    mission = Mission(
-                        name = "Tesla Plaid",
-                        imageUrl = "https://images2.imgbox.com/d2/3b/bQaWiil0_o.png"
-                    )
-                )
-            )
-
-            withContext(Dispatchers.Main){
-                uiState = uiState.copy(launches = launches)
-            }
+            // todo handle error state
+            // todo handle loading state
+            launchesUseCase.getLaunches()
+                .collectLatest { launches ->
+                    withContext(Dispatchers.Main) {
+                        uiState = uiState.copy(launches = launches)
+                    }
+                }
         }
     }
 }
