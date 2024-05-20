@@ -5,14 +5,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dev.wiskiw.spacexapp.domain.usecase.LaunchesUseCase
+import dev.wiskiw.spacexapp.domain.usecase.LaunchListUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class LaunchesViewModel(
-    private val launchesUseCase: LaunchesUseCase,
+    private val launchListUseCase: LaunchListUseCase,
 ) : ViewModel() {
 
     sealed interface Action {
@@ -37,7 +37,7 @@ class LaunchesViewModel(
         viewModelScope.launch {
             // todo handle error state
             // todo handle loading state
-            launchesUseCase.getLaunches()
+            launchListUseCase.get()
                 .collectLatest { launches ->
                     withContext(Dispatchers.Main) {
                         uiState = uiState.copy(launches = launches)
