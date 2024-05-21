@@ -15,8 +15,8 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val viewModelModule = module {
-    viewModel { LaunchesViewModel(get()) }
-    viewModel { LaunchDetailsViewModel(get(), get()) }
+    viewModel { LaunchesViewModel(get(), get()) }
+    viewModel { LaunchDetailsViewModel(get(), get(), get()) }
 }
 
 val appModule = module {

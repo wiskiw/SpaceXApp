@@ -1,5 +1,6 @@
 package dev.wiskiw.spacexapp.presentation.screen.launchdetails
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dev.wiskiw.spacexapp.app.logger.AppLogger
 import dev.wiskiw.spacexapp.domain.usecase.LaunchDetailsUseCase
@@ -11,9 +12,12 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class LaunchDetailsViewModel(
+    savedStateHandle: SavedStateHandle,
     private val detailsUseCase: LaunchDetailsUseCase,
     private val logger: AppLogger,
-) : MviViewModel<LaunchDetailsUiState, LaunchDetailsViewModel.Action, LaunchDetailsViewModel.SideEffect>() {
+) : MviViewModel<LaunchDetailsUiState, LaunchDetailsViewModel.Action, LaunchDetailsViewModel.SideEffect>(
+    savedStateHandle = savedStateHandle,
+) {
 
     sealed interface Action : MviAction {
         data object OnBackClick : Action

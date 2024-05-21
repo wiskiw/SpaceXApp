@@ -1,5 +1,6 @@
 package dev.wiskiw.spacexapp.presentation
 
+import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.google.common.truth.Truth
 import dev.wiskiw.spacexapp.domain.model.LaunchDetailsShort
@@ -18,11 +19,21 @@ import org.robolectric.RobolectricTestRunner
 @RunWith(RobolectricTestRunner::class)
 class LaunchesViewModelTest {
 
+    private fun createViewModel(
+        savedStateHandle: SavedStateHandle = mockk<SavedStateHandle>(relaxed = true) {
+            every { this@mockk.get<Any>(any()) } returns null
+        },
+        launchListUseCase: LaunchListUseCase = mockk<LaunchListUseCase>(relaxed = true),
+    ) = LaunchesViewModel(
+        savedStateHandle = savedStateHandle,
+        launchListUseCase = launchListUseCase,
+    )
+
     @Test
     fun uiStateLoadingIsTrueWhenCreated() = runTest {
         val launchListUseCase = mockk<LaunchListUseCase>(relaxed = true)
 
-        val viewModel = LaunchesViewModel(
+        val viewModel = createViewModel(
             launchListUseCase = launchListUseCase,
         )
 
@@ -35,7 +46,7 @@ class LaunchesViewModelTest {
     fun fetchesDataFromUseCaseWhenWhenCreated() = runTest {
         val launchListUseCase = mockk<LaunchListUseCase>(relaxed = true)
 
-        LaunchesViewModel(
+        createViewModel(
             launchListUseCase = launchListUseCase,
         )
 
@@ -45,7 +56,7 @@ class LaunchesViewModelTest {
     @Test
     fun fetchesDataFromUseCaseWhenLaunchIdExistAndRetryClicked() {
         val launchListUseCase = mockk<LaunchListUseCase>(relaxed = true)
-        val viewModel = LaunchesViewModel(
+        val viewModel = createViewModel(
             launchListUseCase = launchListUseCase,
         )
 
@@ -61,7 +72,7 @@ class LaunchesViewModelTest {
         val launchListUseCase = mockk<LaunchListUseCase>(relaxed = true) {
             every { this@mockk.get() } returns flowOf(emptyList<LaunchDetailsShort>())
         }
-        val viewModel = LaunchesViewModel(
+        val viewModel = createViewModel(
             launchListUseCase = launchListUseCase,
         )
         viewModel.uiStateFlow.test {
@@ -82,7 +93,7 @@ class LaunchesViewModelTest {
         val launchListUseCase = mockk<LaunchListUseCase>(relaxed = true) {
             every { this@mockk.get() } returns flow { throw Exception("Any Exception") }
         }
-        val viewModel = LaunchesViewModel(
+        val viewModel = createViewModel(
             launchListUseCase = launchListUseCase,
         )
 

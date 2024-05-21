@@ -1,5 +1,6 @@
 package dev.wiskiw.spacexapp.presentation.screen.launches
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dev.wiskiw.spacexapp.domain.usecase.LaunchListUseCase
 import dev.wiskiw.spacexapp.presentation.tool.mvi.MviAction
@@ -10,8 +11,11 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class LaunchesViewModel(
+    savedStateHandle: SavedStateHandle,
     private val launchListUseCase: LaunchListUseCase,
-) : MviViewModel<LaunchesUiState, LaunchesViewModel.Action, LaunchesViewModel.SideEffect>() {
+) : MviViewModel<LaunchesUiState, LaunchesViewModel.Action, LaunchesViewModel.SideEffect>(
+    savedStateHandle = savedStateHandle,
+) {
 
     sealed interface Action : MviAction {
         data class OnLaunchClick(val launchId: String) : Action

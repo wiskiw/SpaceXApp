@@ -1,5 +1,6 @@
 package dev.wiskiw.spacexapp.presentation
 
+import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import dev.wiskiw.spacexapp.app.logger.AppLogger
@@ -21,12 +22,24 @@ import org.robolectric.RobolectricTestRunner
 @RunWith(RobolectricTestRunner::class)
 class LaunchDetailsViewModelTest {
 
+    private fun createViewModel(
+        savedStateHandle: SavedStateHandle = mockk<SavedStateHandle>(relaxed = true) {
+            every { this@mockk.get<Any>(any()) } returns null
+        },
+        detailsUseCase: LaunchDetailsUseCase = mockk<LaunchDetailsUseCase>(relaxed = true),
+        logger: AppLogger = mockk<AppLogger>(relaxed = true),
+    ) = LaunchDetailsViewModel(
+        savedStateHandle = savedStateHandle,
+        detailsUseCase = detailsUseCase,
+        logger = logger,
+    )
+
     @Test
     fun uiStateLoadingIsTrueWhenCreated() = runTest {
         val detailsUseCase = mockk<LaunchDetailsUseCase>(relaxed = true)
         val logger = mockk<AppLogger>(relaxed = true)
 
-        val viewModel = LaunchDetailsViewModel(
+        val viewModel = createViewModel(
             detailsUseCase = detailsUseCase,
             logger = logger,
         )
@@ -40,7 +53,7 @@ class LaunchDetailsViewModelTest {
     fun fetchesDataFromUseCaseWhenLaunchIdNavArgumentReceived() {
         val detailsUseCase = mockk<LaunchDetailsUseCase>(relaxed = true)
         val logger = mockk<AppLogger>(relaxed = true)
-        val viewModel = LaunchDetailsViewModel(
+        val viewModel = createViewModel(
             detailsUseCase = detailsUseCase,
             logger = logger,
         )
@@ -55,7 +68,7 @@ class LaunchDetailsViewModelTest {
     fun fetchesDataFromUseCaseWhenLaunchIdNavArgumentChanged() {
         val detailsUseCase = mockk<LaunchDetailsUseCase>(relaxed = true)
         val logger = mockk<AppLogger>(relaxed = true)
-        val viewModel = LaunchDetailsViewModel(
+        val viewModel = createViewModel(
             detailsUseCase = detailsUseCase,
             logger = logger,
         )
@@ -76,7 +89,7 @@ class LaunchDetailsViewModelTest {
     fun skipsFetchingDataFromUseCaseWhenLaunchIdNavArgumentNotChanged() {
         val detailsUseCase = mockk<LaunchDetailsUseCase>(relaxed = true)
         val logger = mockk<AppLogger>(relaxed = true)
-        val viewModel = LaunchDetailsViewModel(
+        val viewModel = createViewModel(
             detailsUseCase = detailsUseCase,
             logger = logger,
         )
@@ -91,7 +104,7 @@ class LaunchDetailsViewModelTest {
     fun fetchesDataFromUseCaseWhenLaunchIdExistAndRetryClicked() {
         val detailsUseCase = mockk<LaunchDetailsUseCase>(relaxed = true)
         val logger = mockk<AppLogger>(relaxed = true)
-        val viewModel = LaunchDetailsViewModel(
+        val viewModel = createViewModel(
             detailsUseCase = detailsUseCase,
             logger = logger,
         )
@@ -111,7 +124,7 @@ class LaunchDetailsViewModelTest {
             every { this@mockk.get(any()) } returns flowOf(mockk<LaunchDetailsFull>())
         }
         val logger = mockk<AppLogger>(relaxed = true)
-        val viewModel = LaunchDetailsViewModel(
+        val viewModel = createViewModel(
             detailsUseCase = detailsUseCase,
             logger = logger,
         )
@@ -137,7 +150,7 @@ class LaunchDetailsViewModelTest {
             every { this@mockk.get(any()) } returns flow { throw Exception("Any Exception") }
         }
         val logger = mockk<AppLogger>(relaxed = true)
-        val viewModel = LaunchDetailsViewModel(
+        val viewModel = createViewModel(
             detailsUseCase = detailsUseCase,
             logger = logger,
         )

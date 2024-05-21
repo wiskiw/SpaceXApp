@@ -1,5 +1,6 @@
 package dev.wiskiw.spacexapp.presentation.tool.mvi
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.channels.Channel
@@ -11,15 +12,18 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-abstract class MviViewModel<State : Any, Action : MviAction, SideEffect : MviSideEffect> :
-    ViewModel() {
+abstract class MviViewModel<State : Any, Action : MviAction, SideEffect : MviSideEffect>(
+    private val savedStateHandle: SavedStateHandle,
+) : ViewModel() {
 
     private val sideEffectChannel = Channel<SideEffect>(capacity = Channel.BUFFERED)
     val sideEffect: Flow<SideEffect>
         get() = sideEffectChannel.receiveAsFlow()
 
 
-    private val initialUiState: State by lazy { createInitialUiState() }
+    protected open val uiStateKey: String = this.javaClass.name
+    private val initialUiState: State
+            by lazy { savedStateHandle.get<State>(uiStateKey) ?: createInitialUiState() }
     private val internalUiStateFlow = MutableStateFlow(initialUiState)
     val uiStateFlow: StateFlow<State> = internalUiStateFlow.asStateFlow()
 
@@ -27,7 +31,9 @@ abstract class MviViewModel<State : Any, Action : MviAction, SideEffect : MviSid
 
     protected fun updateState(updater: State.() -> State) {
         internalUiStateFlow.update {
-            updater.invoke(it)
+            val newState = updater.invoke(it)
+            savedStateHandle[uiStateKey] = newState
+            newState
         }
     }
 
