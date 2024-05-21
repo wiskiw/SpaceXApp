@@ -92,6 +92,7 @@ dependencies {
 
     // Networking
     implementation(libs.apollo)
+    testImplementation(libs.apollo)
 
     // Testing
     testImplementation(libs.junit)

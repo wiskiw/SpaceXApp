@@ -23,6 +23,6 @@ class ApolloLaunchDetailsToLaunchDetailsFullMapper :
     private fun mapRocket(from: LaunchDetailsQuery.Rocket) = Rocket(
         id = from.id,
         name = from.name.expectValue("name"),
-        type = from.name.expectValue("type")
+        type = from.type.expectValue("type")
     )
 }
