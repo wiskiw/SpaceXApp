@@ -8,15 +8,16 @@ import dev.wiskiw.spacexapp.presentation.screen.launchdetails.LaunchDetailsScree
 import dev.wiskiw.spacexapp.presentation.screen.launches.LaunchesScreen
 import kotlinx.serialization.Serializable
 
-interface NavDestination {
+@Serializable
+sealed class NavDestination {
 
     @Serializable
-    object Launches : NavDestination
+    data object Launches : NavDestination()
 
     @Serializable
     data class LaunchDetails(
         val launchId: String,
-    ) : NavDestination
+    ) : NavDestination()
 }
 
 fun NavGraphBuilder.buildGraph(navController: NavController) = run {

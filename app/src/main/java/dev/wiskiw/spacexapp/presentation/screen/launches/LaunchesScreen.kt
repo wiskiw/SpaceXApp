@@ -186,12 +186,12 @@ private fun LaunchItem(
         ) {
             Text(
                 text = launchDetails.rocketName,
-                color = MaterialTheme.colorScheme.onSecondary,
+                color = MaterialTheme.colorScheme.onSurface,
                 style = MaterialTheme.typography.titleLarge,
             )
             Text(
                 text = launchDetails.mission.name,
-                color = MaterialTheme.colorScheme.onSecondary,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 style = MaterialTheme.typography.bodyMedium,
             )
         }
