@@ -14,6 +14,7 @@ serialization = "1.6.3"
 kotlinxCoroutines = "1.8.0"
 googleTruth = "1.4.2" # library for performing assertions in tests
 mockk = "1.13.11"
+robolectric = "4.12"
 
 # Compose tools
 composeNavigation = "2.8.0-beta01" # 2.8.0 allows to have typed-safe params
@@ -69,6 +70,7 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 google-truth = { group = "com.google.truth", name = "truth", version.ref = "googleTruth" }
 mockk-agent = { group = "io.mockk", name = "mockk-agent", version.ref = "mockk" }
 mockk-android = { group = "io.mockk", name = "mockk-android", version.ref = "mockk" }
+robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

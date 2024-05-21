@@ -100,6 +100,8 @@ dependencies {
     testImplementation(libs.google.truth)
     testImplementation(libs.mockk.android)
     testImplementation(libs.mockk.agent)
+    testImplementation(libs.robolectric)
+    testImplementation("app.cash.turbine:turbine:1.1.0")
     androidTestImplementation(libs.google.truth)
     androidTestImplementation(libs.mockk.android)
     androidTestImplementation(libs.mockk.agent)
