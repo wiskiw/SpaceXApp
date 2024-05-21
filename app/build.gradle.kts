@@ -73,6 +73,7 @@ dependencies {
 
     // Compose Tools
     implementation(libs.compose.navigation)
+    implementation(libs.compose.lifecycle)
 
     // Image loading
     implementation(libs.coil.compose)
