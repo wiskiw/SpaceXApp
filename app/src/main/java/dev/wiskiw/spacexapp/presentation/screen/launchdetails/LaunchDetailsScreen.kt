@@ -21,11 +21,13 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import dev.wiskiw.spacexapp.R
@@ -59,8 +61,10 @@ fun LaunchDetailsScreen(
         )
     }
 
+    val state by viewModel.uiStateFlow.collectAsStateWithLifecycle()
+
     Content(
-        state = viewModel.uiState,
+        state = state,
         onAction = viewModel::handleAction,
     )
 }

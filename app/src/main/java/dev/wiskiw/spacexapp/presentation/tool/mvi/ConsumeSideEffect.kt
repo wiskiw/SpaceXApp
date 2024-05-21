@@ -24,8 +24,8 @@ fun <SideEffect : MviSideEffect> ConsumeSideEffect(
 }
 
 @Composable
-fun <Action : MviAction, SideEffect : MviSideEffect> ConsumeSideEffect(
-    viewModel: MviViewModel<Action, SideEffect>,
+fun <State : Any, Action : MviAction, SideEffect : MviSideEffect> ConsumeSideEffect(
+    viewModel: MviViewModel<State, Action, SideEffect>,
     lifeCycleState: Lifecycle.State = Lifecycle.State.STARTED,
     sideEffectHandler: (SideEffect) -> Unit,
 ) {
