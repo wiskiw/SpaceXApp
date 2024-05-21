@@ -11,7 +11,8 @@ class ApolloLaunchDetailsToLaunchDetailsFullMapper :
     override fun map(from: LaunchDetailsQuery.Launch) = LaunchDetailsFull(
         id = from.id.expectValue("id"),
         mission = mapMission(from.mission.expectValue("mission")),
-        rocket = mapRocket(from.rocket.expectValue("rocket"))
+        rocket = mapRocket(from.rocket.expectValue("rocket")),
+        site = from.site.expectValue("site"),
     )
 
     private fun mapMission(from: LaunchDetailsQuery.Mission) = Mission(

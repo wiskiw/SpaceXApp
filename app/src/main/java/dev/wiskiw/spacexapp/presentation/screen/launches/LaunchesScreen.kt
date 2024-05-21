@@ -25,6 +25,8 @@ import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
@@ -103,12 +105,12 @@ private fun Content(
 
                 else -> LaunchList(
                     modifier = Modifier.padding(scaffoldPaddings),
-                    launches = state.launches,
-                    onClick = { launchId ->
-                        val action = LaunchesViewModel.Action.OnLaunchClick(launchId)
-                        onAction(action)
-                    }
-                )
+                    scrollConnection = scrollBehavior.nestedScrollConnection,
+                    launches = state.launches
+                ) { launchId ->
+                    val action = LaunchesViewModel.Action.OnLaunchClick(launchId)
+                    onAction(action)
+                }
             }
         }
     }
@@ -117,11 +119,12 @@ private fun Content(
 @Composable
 private fun LaunchList(
     modifier: Modifier = Modifier,
+    scrollConnection: NestedScrollConnection,
     launches: List<LaunchDetailsShort>,
     onClick: (String) -> Unit,
 ) {
     LazyColumn(
-        modifier = modifier,
+        modifier = modifier.nestedScroll(scrollConnection),
         verticalArrangement = Arrangement.spacedBy(MaterialTheme.size.one)
     ) {
         item {

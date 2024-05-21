@@ -29,7 +29,8 @@ fun NavGraphBuilder.buildGraph(navController: NavController) = run {
     composable<NavDestination.LaunchDetails> {
         val args = it.toRoute<NavDestination.LaunchDetails>()
         LaunchDetailsScreen(
-            navigateTo = navController::navigate,
+            launchId = args.launchId,
+            navigateBack = { navController.popBackStack() },
         )
 
     }

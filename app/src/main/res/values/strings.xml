@@ -5,6 +5,16 @@
     <string name="screen_launches_title">Launches</string>
     <string name="screen_launches_launch_item_image_content_description">Image for %1$s mission</string>
 
+    <string name="screen_launch_details_title">Launch Details (id: %1$s)</string>
+    <string name="screen_launch_details_mission_image_content_description">Image for %1$s mission</string>
+    <string name="screen_launch_details_rocket_title">Rocket</string>
+    <string name="screen_launch_details_rocket_name_label">NAME: %1$s</string>
+    <string name="screen_launch_details_rocket_type_label">TYPE: %1$s</string>
+    <string name="screen_launch_details_rocket_id_label">ID: %1$s</string>
+    <string name="screen_launch_details_mission_title">Mission</string>
+    <string name="screen_launch_details_mission_name_label">NAME: %1$s</string>
+    <string name="screen_launch_details_site_title">Site</string>
+
     <string name="compose_error_view_retry_button_label">Retry</string>
 
 </resources>
