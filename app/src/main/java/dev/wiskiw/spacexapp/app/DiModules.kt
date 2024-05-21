@@ -3,6 +3,7 @@ package dev.wiskiw.spacexapp.app
 import com.apollographql.apollo3.ApolloClient
 import dev.wiskiw.spacexapp.app.logger.AndroidLogger
 import dev.wiskiw.spacexapp.app.logger.AppLogger
+import dev.wiskiw.spacexapp.data.datasource.SpaceXLaunchesApolloDataSource
 import dev.wiskiw.spacexapp.data.datasource.SpaceXLaunchesRemoteDataSource
 import dev.wiskiw.spacexapp.data.repository.SpaceXLaunchesRepository
 import dev.wiskiw.spacexapp.domain.repository.LaunchesRepository
@@ -28,7 +29,7 @@ val appModule = module {
     }
 
     // creating DataSources
-    single<SpaceXLaunchesRemoteDataSource> { SpaceXLaunchesRemoteDataSource(get(), get()) }
+    single<SpaceXLaunchesRemoteDataSource> { SpaceXLaunchesApolloDataSource(get(), get()) }
 
     // creating Repositories
     single<LaunchesRepository> { SpaceXLaunchesRepository(get()) }

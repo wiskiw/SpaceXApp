@@ -11,6 +11,9 @@ composeBom = "2023.08.00"
 
 # Tools
 serialization = "1.6.3"
+kotlinxCoroutines = "1.8.0"
+googleTruth = "1.4.2" # library for performing assertions in tests
+mockk = "1.13.11"
 
 # Compose tools
 composeNavigation = "2.8.0-beta01" # 2.8.0 allows to have typed-safe params
@@ -27,9 +30,7 @@ apollo = "3.8.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
-junit = { group = "junit", name = "junit", version.ref = "junit" }
-androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
-androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
@@ -59,6 +60,15 @@ koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose" }
 
 # Networking
 apollo = { group = "com.apollographql.apollo3", name = "apollo-runtime", version.ref = "apollo" }
+
+# Testing
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+google-truth = { group = "com.google.truth", name = "truth", version.ref = "googleTruth" }
+mockk-agent = { group = "io.mockk", name = "mockk-agent", version.ref = "mockk" }
+mockk-android = { group = "io.mockk", name = "mockk-android", version.ref = "mockk" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

@@ -6,7 +6,6 @@ import dev.wiskiw.spacexapp.domain.model.LaunchDetailsShort
 import dev.wiskiw.spacexapp.domain.repository.LaunchesRepository
 
 class SpaceXLaunchesRepository(
-    // todo SpaceXLaunchesRemoteDataSource can be replaced with an interface
     private val remoteDataSource: SpaceXLaunchesRemoteDataSource,
 ) : LaunchesRepository {
 
