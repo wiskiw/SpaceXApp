@@ -34,6 +34,8 @@ import coil.request.ImageRequest
 import dev.wiskiw.spacexapp.R
 import dev.wiskiw.spacexapp.domain.model.LaunchDetailsShort
 import dev.wiskiw.spacexapp.domain.model.Mission
+import dev.wiskiw.spacexapp.presentation.compose.ErrorView
+import dev.wiskiw.spacexapp.presentation.compose.ProgressView
 import dev.wiskiw.spacexapp.presentation.theme.SpaceXAppTheme
 import dev.wiskiw.spacexapp.presentation.theme.size
 import org.koin.androidx.compose.koinViewModel
@@ -73,32 +75,57 @@ private fun Content(
                 )
             },
         ) { scaffoldPaddings ->
-            LazyColumn(
-                modifier = Modifier
-                    .padding(scaffoldPaddings)
-                    .background(MaterialTheme.colorScheme.surface),
-                verticalArrangement = Arrangement.spacedBy(MaterialTheme.size.one)
-            ) {
-                item {
-                    Spacer(modifier = Modifier.height(MaterialTheme.size.three))
-                }
-                items(state.launches.size) {
-                    val launch = state.launches[it]
-                    LaunchItem(
-                        modifier = Modifier
-                            .padding(horizontal = MaterialTheme.size.one)
-                            .fillMaxWidth(),
-                        launchDetails = launch,
-                        onClick = {
-                            val action = LaunchesViewModel.Action.OnLaunchClick(launch.id)
-                            onAction(action)
-                        }
-                    )
-                }
-                item {
-                    Spacer(modifier = Modifier.height(MaterialTheme.size.three))
-                }
+            when {
+                state.isLoading -> ProgressView(
+                    modifier = Modifier.padding(scaffoldPaddings),
+                )
+
+                state.error != null -> ErrorView(
+                    modifier = Modifier.padding(scaffoldPaddings),
+                    text = state.error,
+                    onRetry = { onAction(LaunchesViewModel.Action.OnRetryClick) },
+                )
+
+                else -> LaunchList(
+                    modifier = Modifier.padding(scaffoldPaddings),
+                    launches = state.launches,
+                    onClick = { launchId ->
+                        val action = LaunchesViewModel.Action.OnLaunchClick(launchId)
+                        onAction(action)
+                    }
+                )
             }
+        }
+    }
+}
+
+@Composable
+private fun LaunchList(
+    modifier: Modifier = Modifier,
+    launches: List<LaunchDetailsShort>,
+    onClick: (String) -> Unit,
+) {
+    LazyColumn(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(MaterialTheme.size.one)
+    ) {
+        item {
+            Spacer(modifier = Modifier.height(MaterialTheme.size.three))
+        }
+        items(launches.size) {
+            val launch = launches[it]
+            LaunchItem(
+                modifier = Modifier
+                    .padding(horizontal = MaterialTheme.size.one)
+                    .fillMaxWidth(),
+                launchDetails = launch,
+                onClick = {
+                    onClick(launch.id)
+                }
+            )
+        }
+        item {
+            Spacer(modifier = Modifier.height(MaterialTheme.size.three))
         }
     }
 }
@@ -177,6 +204,8 @@ private fun ContentPreviewLight() {
     ) {
         Content(
             state = LaunchesUiState(
+                isLoading = false,
+                error = null,
                 launches = launches,
             ),
             onAction = {}

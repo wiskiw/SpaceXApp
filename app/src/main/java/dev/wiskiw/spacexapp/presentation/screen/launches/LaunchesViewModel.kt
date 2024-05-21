@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.wiskiw.spacexapp.domain.usecase.LaunchListUseCase
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -17,10 +18,13 @@ class LaunchesViewModel(
 
     sealed interface Action {
         data class OnLaunchClick(val launchId: String) : Action
+        data object OnRetryClick : Action
     }
 
     var uiState: LaunchesUiState by mutableStateOf(
         LaunchesUiState(
+            isLoading = false,
+            error = null,
             launches = emptyList(),
         )
     )
@@ -30,17 +34,37 @@ class LaunchesViewModel(
     }
 
     fun handleAction(action: Action) {
-        // todo
+        when (action) {
+            Action.OnRetryClick -> fetchLaunches()
+            is Action.OnLaunchClick -> {} // todo
+        }
     }
 
     private fun fetchLaunches() {
+        uiState = uiState.copy(
+            launches = emptyList(),
+            isLoading = true,
+            error = null,
+        )
+
         viewModelScope.launch {
-            // todo handle error state
-            // todo handle loading state
             launchListUseCase.get()
+                .catch {
+                    withContext(Dispatchers.Main) {
+                        uiState = uiState.copy(
+                            launches = emptyList(),
+                            isLoading = false,
+                            error = it.message,
+                        )
+                    }
+                }
                 .collectLatest { launches ->
                     withContext(Dispatchers.Main) {
-                        uiState = uiState.copy(launches = launches)
+                        uiState = uiState.copy(
+                            launches = launches,
+                            isLoading = false,
+                            error = null,
+                        )
                     }
                 }
         }

@@ -5,4 +5,6 @@
     <string name="screen_launches_title">Launches</string>
     <string name="screen_launches_launch_item_image_content_description">Image for %1$s mission</string>
 
+    <string name="compose_error_view_retry_button_label">Retry</string>
+
 </resources>
