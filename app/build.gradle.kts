@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.jetbrainsKotlinSerialization)
     alias(libs.plugins.apolloGraphql)
 }
 
@@ -66,6 +67,12 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+
+    // Tools
+    implementation(libs.kotlinx.serialization.json)
+
+    // Compose Tools
+    implementation(libs.compose.navigation)
 
     // Image loading
     implementation(libs.coil.compose)

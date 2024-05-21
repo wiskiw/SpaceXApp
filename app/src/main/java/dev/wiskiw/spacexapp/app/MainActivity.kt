@@ -3,8 +3,10 @@ package dev.wiskiw.spacexapp.app
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import dev.wiskiw.spacexapp.presentation.screen.launches.LaunchesScreen
-import dev.wiskiw.spacexapp.presentation.screen.launches.LaunchesViewModel
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
+import dev.wiskiw.spacexapp.presentation.tool.NavDestination
+import dev.wiskiw.spacexapp.presentation.tool.buildGraph
 import dev.wiskiw.spacexapp.presentation.theme.SpaceXAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -13,9 +15,13 @@ class MainActivity : ComponentActivity() {
         setContent {
             SpaceXAppTheme {
 
-
-                // todo implement navigation
-                LaunchesScreen()
+                val navController = rememberNavController()
+                NavHost(
+                    navController = navController,
+                    startDestination = NavDestination.Launches
+                ) {
+                    with(this) { buildGraph(navController) }
+                }
             }
         }
     }
