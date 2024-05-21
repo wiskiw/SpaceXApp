@@ -3,9 +3,11 @@ package dev.wiskiw.spacexapp.presentation.screen.launches
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.wiskiw.spacexapp.domain.usecase.LaunchListUseCase
+import dev.wiskiw.spacexapp.presentation.tool.mvi.MviAction
+import dev.wiskiw.spacexapp.presentation.tool.mvi.MviSideEffect
+import dev.wiskiw.spacexapp.presentation.tool.mvi.MviViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
@@ -14,11 +16,15 @@ import kotlinx.coroutines.withContext
 
 class LaunchesViewModel(
     private val launchListUseCase: LaunchListUseCase,
-) : ViewModel() {
+) : MviViewModel<LaunchesViewModel.Action, LaunchesViewModel.SideEffect>() {
 
-    sealed interface Action {
+    sealed interface Action : MviAction {
         data class OnLaunchClick(val launchId: String) : Action
         data object OnRetryClick : Action
+    }
+
+    sealed interface SideEffect : MviSideEffect {
+        data class NavigateToLaunchDetails(val launchId: String) : SideEffect
     }
 
     var uiState: LaunchesUiState by mutableStateOf(
@@ -33,10 +39,13 @@ class LaunchesViewModel(
         fetchLaunches()
     }
 
-    fun handleAction(action: Action) {
+    override fun handleAction(action: Action) {
         when (action) {
             Action.OnRetryClick -> fetchLaunches()
-            is Action.OnLaunchClick -> {} // todo
+            is Action.OnLaunchClick -> {
+                val sideEffect = SideEffect.NavigateToLaunchDetails(launchId = action.launchId)
+                sendSideEffect(sideEffect)
+            }
         }
     }
 

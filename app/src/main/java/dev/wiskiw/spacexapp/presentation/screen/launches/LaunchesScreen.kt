@@ -1,5 +1,6 @@
 package dev.wiskiw.spacexapp.presentation.screen.launches
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -38,12 +39,23 @@ import dev.wiskiw.spacexapp.presentation.compose.ErrorView
 import dev.wiskiw.spacexapp.presentation.compose.ProgressView
 import dev.wiskiw.spacexapp.presentation.theme.SpaceXAppTheme
 import dev.wiskiw.spacexapp.presentation.theme.size
+import dev.wiskiw.spacexapp.presentation.tool.mvi.ConsumeSideEffect
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun LaunchesScreen(
     viewModel: LaunchesViewModel = koinViewModel(),
 ) {
+
+    val context = LocalContext.current
+    ConsumeSideEffect(
+        viewModel = viewModel,
+        sideEffectHandler = {
+            // todo handle side effects
+            Toast.makeText(context, "Please handle side effects", Toast.LENGTH_SHORT).show()
+        }
+    )
+
     Content(
         state = viewModel.uiState,
         onAction = viewModel::handleAction,
