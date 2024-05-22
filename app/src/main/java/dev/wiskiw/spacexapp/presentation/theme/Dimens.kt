@@ -31,6 +31,7 @@ data class Size(
     val sevenAndHalf: Dp = 60.dp,
     val eighth: Dp = 64.dp,
     val ten: Dp = 80.dp,
+    val twentyOne: Dp = 168.dp,
 )
 
 val LocalSize = compositionLocalOf { Size() }

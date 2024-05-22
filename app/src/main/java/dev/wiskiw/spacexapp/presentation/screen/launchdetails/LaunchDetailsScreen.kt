@@ -1,10 +1,13 @@
 package dev.wiskiw.spacexapp.presentation.screen.launchdetails
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -22,11 +25,14 @@ import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -129,14 +135,19 @@ private fun LaunchDetails(
     modifier: Modifier = Modifier,
     launchDetails: LaunchDetailsFull,
 ) {
-    val scrollState = rememberScrollState()
     Column(
         modifier = modifier
-            .padding(MaterialTheme.size.two)
-            .verticalScroll(scrollState),
+            .padding(MaterialTheme.size.two),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        val configuration = LocalConfiguration.current
+
         AsyncImage(
             modifier = Modifier
+                .heightIn(
+                    max = if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE)
+                        MaterialTheme.size.twentyOne else Dp.Unspecified,
+                )
                 .aspectRatio(1f),
             model = ImageRequest.Builder(LocalContext.current)
                 .data(launchDetails.mission.imageUrl)
@@ -147,16 +158,24 @@ private fun LaunchDetails(
                 launchDetails.id,
             ),
         )
-        Spacer(Modifier.height(MaterialTheme.size.two))
 
-        RocketDetails(rocket = launchDetails.rocket)
-        Spacer(Modifier.height(MaterialTheme.size.two))
+        val scrollState = rememberScrollState()
+        Column(
+            modifier = Modifier
+                .verticalScroll(scrollState)
+                .fillMaxWidth(),
+        ) {
+            Spacer(Modifier.height(MaterialTheme.size.two))
 
-        MissionDetails(mission = launchDetails.mission)
-        Spacer(Modifier.height(MaterialTheme.size.two))
+            RocketDetails(rocket = launchDetails.rocket)
+            Spacer(Modifier.height(MaterialTheme.size.two))
 
-        SiteDetails(site = launchDetails.site)
-        Spacer(Modifier.height(MaterialTheme.size.two))
+            MissionDetails(mission = launchDetails.mission)
+            Spacer(Modifier.height(MaterialTheme.size.two))
+
+            SiteDetails(site = launchDetails.site)
+            Spacer(Modifier.height(MaterialTheme.size.two))
+        }
     }
 }
 
