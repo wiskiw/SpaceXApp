@@ -2,13 +2,13 @@ package dev.wiskiw.spacexapp.presentation.tool.navigation
 
 import kotlinx.serialization.Serializable
 
-internal sealed interface AppNavDestination {
+object AppNavDestination {
 
     @Serializable
-    data object Launches : AppNavDestination
+    data object Launches : TypeSafeNavDestination
 
     @Serializable
     data class LaunchDetails(
         val launchId: String,
-    ) : AppNavDestination
+    ) : TypeSafeNavDestination
 }

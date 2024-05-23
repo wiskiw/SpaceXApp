@@ -18,36 +18,38 @@ import kotlinx.serialization.json.Json
  */
 
 internal const val ARGS_KEY = "ARGS_KEY"
-internal inline fun <reified T> getAppNavDestinationName(): String {
-    return T::class.qualifiedName.toString()
-}
 
-internal fun buildRoute(appNavDestinationName: String): String {
-    return "$appNavDestinationName/{$ARGS_KEY}"
-}
-
-internal inline fun <reified T> buildRoute(): String {
-    val destinationName = getAppNavDestinationName<T>()
-    return buildRoute(destinationName)
-}
-
-internal inline fun <reified T> NavGraphBuilder.composableWithAppNavDestination(
+internal inline fun <reified T : TypeSafeNavDestination> NavGraphBuilder.composableTypeSafeNavDestination(
     noinline content: @Composable (AnimatedContentScope.(NavBackStackEntry) -> Unit),
 ) {
-    val route = buildRoute<T>()
+    val route = buildTypeSafeNavDestinationRoute<T>()
     composable(route, content = content)
 }
 
-internal inline fun <reified T> NavBackStackEntry.getAppNavDestination(): T {
+internal inline fun <reified T : TypeSafeNavDestination> NavController.navigateToTypeSafeNavDestination(
+    destination: T,
+) {
+    val stringArgs = Json.encodeToString(destination)
+    val route = buildTypeSafeNavDestinationRoute<T>()
+    val routeWithArgs = route.replace("{$ARGS_KEY}", stringArgs)
+    navigate(routeWithArgs)
+}
+
+internal inline fun <reified T : TypeSafeNavDestination> NavBackStackEntry.getTypeSafeNavDestination(): T {
     val stringArgs = arguments?.getString(ARGS_KEY)
-        ?: throw IllegalArgumentException("Expected nav arguments are missing. Please use navigateToAppNavDestination(T) to navigate to a destination.")
+        ?: throw IllegalArgumentException("Expected nav arguments are missing. Please use navigateToTypeSafeNavDestination(T) to navigate to a destination.")
     return Json.decodeFromString<T>(stringArgs)
 }
 
+internal inline fun <reified T : TypeSafeNavDestination> buildTypeSafeNavDestinationRoute(): String {
+    val destinationName = getTypeSafeNavDestinationName<T>()
+    return buildTypeSafeNavDestinationRoute(destinationName)
+}
 
-internal inline fun <reified T> NavController.navigateToAppNavDestination(destination: T) {
-    val stringArgs = Json.encodeToString(destination)
-    val route = buildRoute<T>()
-    val routeWithArgs = route.replace("{$ARGS_KEY}", stringArgs)
-    navigate(routeWithArgs)
+private inline fun <reified T : TypeSafeNavDestination> getTypeSafeNavDestinationName(): String {
+    return T::class.qualifiedName.toString()
+}
+
+private fun buildTypeSafeNavDestinationRoute(appNavDestinationName: String): String {
+    return "$appNavDestinationName/{$ARGS_KEY}"
 }

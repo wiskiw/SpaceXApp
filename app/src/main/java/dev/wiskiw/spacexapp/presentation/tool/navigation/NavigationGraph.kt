@@ -7,19 +7,19 @@ import dev.wiskiw.spacexapp.presentation.screen.launches.LaunchesScreen
 
 
 fun NavGraphBuilder.buildGraph(navController: NavController) {
-    composableWithAppNavDestination<AppNavDestination.Launches> {
+    composableTypeSafeNavDestination<AppNavDestination.Launches> {
         LaunchesScreen(
             navigateToDetails = { launchId ->
                 val destination = AppNavDestination.LaunchDetails(
                     launchId = launchId,
                 )
-                navController.navigateToAppNavDestination(destination)
+                navController.navigateToTypeSafeNavDestination(destination)
             },
         )
     }
 
-    composableWithAppNavDestination<AppNavDestination.LaunchDetails> {
-        val destination = it.getAppNavDestination<AppNavDestination.LaunchDetails>()
+    composableTypeSafeNavDestination<AppNavDestination.LaunchDetails> {
+        val destination = it.getTypeSafeNavDestination<AppNavDestination.LaunchDetails>()
         LaunchDetailsScreen(
             launchId = destination.launchId,
             navigateBack = { navController.popBackStack() },

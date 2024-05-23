@@ -8,7 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import dev.wiskiw.spacexapp.presentation.theme.SpaceXAppTheme
 import dev.wiskiw.spacexapp.presentation.tool.navigation.AppNavDestination
 import dev.wiskiw.spacexapp.presentation.tool.navigation.buildGraph
-import dev.wiskiw.spacexapp.presentation.tool.navigation.buildRoute
+import dev.wiskiw.spacexapp.presentation.tool.navigation.buildTypeSafeNavDestinationRoute
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,7 +18,7 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 NavHost(
                     navController = navController,
-                    startDestination = buildRoute<AppNavDestination.Launches>(),
+                    startDestination = buildTypeSafeNavDestinationRoute<AppNavDestination.Launches>(),
                 ) {
                     with(this) { buildGraph(navController) }
                 }
