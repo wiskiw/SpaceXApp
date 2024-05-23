@@ -42,24 +42,19 @@ import dev.wiskiw.spacexapp.presentation.compose.ErrorView
 import dev.wiskiw.spacexapp.presentation.compose.ProgressView
 import dev.wiskiw.spacexapp.presentation.theme.SpaceXAppTheme
 import dev.wiskiw.spacexapp.presentation.theme.size
-import dev.wiskiw.spacexapp.presentation.tool.NavDestination
 import dev.wiskiw.spacexapp.presentation.tool.mvi.ConsumeSideEffect
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun LaunchesScreen(
     viewModel: LaunchesViewModel = koinViewModel(),
-    navigateTo: (NavDestination) -> Unit,
+    navigateToDetails: (launchId: String) -> Unit,
 ) {
 
     ConsumeSideEffect(viewModel = viewModel) { sideEffect ->
         when (sideEffect) {
-            is LaunchesViewModel.SideEffect.NavigateToLaunchDetails -> {
-                val destination = NavDestination.LaunchDetails(
-                    launchId = sideEffect.launchId,
-                )
-                navigateTo(destination)
-            }
+            is LaunchesViewModel.SideEffect.NavigateToLaunchDetails ->
+                navigateToDetails(sideEffect.launchId)
         }
     }
 
